@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Settings.UserSettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:orientation="horizontal" />
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="81dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:shadowColor="#000000"
+                android:textColor="#000000"
+                android:textColorHint="#8C7878"
+                android:textSize="18sp"
+                android:transitionName="Name" />
+
+            <EditText
+                android:id="@+id/emailid"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/user_name"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:hint="Email ID"
+                android:inputType="textPersonName|textEmailSubject"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:shadowColor="#000000"
+                android:textColor="#000000"
+                android:textColorHint="#8C7878"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/emailid"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:shadowColor="#000000"
+                android:textColor="#000000"
+                android:textColorHint="#8C7878"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/phone"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="Full Adrdess."
+                android:inputType="textMultiLine"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:shadowColor="#000000"
+                android:textColor="#000000"
+                android:textColorHint="#8C7878"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/user_pincode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/address"
+                android:layout_alignStart="@id/user_name"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:ems="10"
+                android:hint="Pincode"
+                android:inputType="number|textPersonName"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:shadowColor="#000000"
+                android:textColor="#000000"
+                android:textColorHint="#8C7878"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

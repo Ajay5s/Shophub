@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbarFadeDuration="250"
+    android:scrollbarSize="10dp"
+    android:scrollbarTrackHorizontal="@drawable/ic_launcher_background"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="666dp"
+        android:layout_below="@+id/searchs"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <EditText
+        android:id="@+id/searchs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="Search Here"
+        android:paddingStart="10dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="2dp"
+        android:textColor="#272525"
+        android:textColorHint="#C1ACAC"
+        android:textSize="20sp" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchs"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="0dp"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?attr/editTextBackground"
+                android:fontFamily="@font/palanquin_dark_semibold"
+                android:text="Today Special offers"
+                android:textAlignment="center"
+                android:textColor="#F80000"
+                android:textSize="30sp" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/item_detailed_images"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarSize="10dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="horizontal">
+
+            </androidx.viewpager.widget.ViewPager>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="757dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="0dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

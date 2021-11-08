@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Shophub</string>
+    <string name="title_home">Home</string>
+    <string name="title_order">Order</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_settings">Settings</string>
+</resources>

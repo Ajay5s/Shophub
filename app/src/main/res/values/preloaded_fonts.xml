@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/arbutus</item>
+        <item>@font/coda</item>
+        <item>@font/eater</item>
+        <item>@font/marko_one</item>
+        <item>@font/palanquin_dark_semibold</item>
+    </array>
+</resources>
