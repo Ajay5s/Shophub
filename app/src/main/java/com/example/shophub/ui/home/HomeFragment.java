@@ -73,7 +73,6 @@ public class HomeFragment extends Fragment {
                     scrollView.setVisibility(View.GONE);
                     recyclerView2.setVisibility(View.VISIBLE);
                     search_progress(s.toString());
-                    recyclelist();
                 }
             }
         });
