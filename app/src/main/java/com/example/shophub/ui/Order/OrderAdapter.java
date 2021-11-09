@@ -12,11 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shophub.R;
-import com.example.shophub.ui.home.Mobileadapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.ListIterator;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
     List<Order_class> order_classes;
@@ -35,10 +33,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Picasso.get().load(order_classes.get(position).getItem_image()).fit().into(holder.images);
+        Picasso.get().load(order_classes.get(position).getItem_image()).placeholder(R.drawable.loadings).fit().into(holder.images);
         holder.name.setText(order_classes.get(position).getItem_name());
         holder.price.setText("Rs. "+order_classes.get(position).getPrice());
-        holder.quantity.setText(" Quantity"+order_classes.get(position).getCount());
+        holder.quantity.setText("Quantity : "+order_classes.get(position).getCount());
         holder.quantity.setVisibility(View.VISIBLE);
         holder.delete.setVisibility(View.GONE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

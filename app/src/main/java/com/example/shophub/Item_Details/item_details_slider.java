@@ -36,7 +36,7 @@ public class item_details_slider extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_details,container,false);
         ImageView imageView=view.findViewById(R.id.item_details_image);
-        Picasso.get().load(imageitems.get(position)).into(imageView);
+        Picasso.get().load(imageitems.get(position)).placeholder(R.drawable.loadings).into(imageView);
         container.addView(view);
         return view;
     }

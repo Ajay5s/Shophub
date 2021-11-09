@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,9 +19,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shophub.ui.Order.Order_class;
 import com.example.shophub.ui.home.Itemclass;
-import com.example.shophub.ui.home.Mobileadapter;
+import com.example.shophub.ui.home.ItemAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,11 +36,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Checkout_activity extends AppCompatActivity implements PaymentResultListener {
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     Button checkouts;
-    Mobileadapter mobileadapter2;
+    ItemAdapter itemAdapter2;
     RecyclerView checkout_recycler;
     List<Itemclass> list;
     LinearLayoutManager layoutManager;
@@ -56,6 +55,8 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
     RadioButton radioButton, button1, button2;
     String address;
     int i;
+    int c=1;
+    final Random myRandom = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,6 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
         phone = (EditText)findViewById(R.id.chk_phone);
         button1=(RadioButton) findViewById(R.id.radioButton);
         button2=(RadioButton) findViewById(R.id.radioButton2);
-        editText.setEnabled(false);
 
 
 
@@ -98,8 +98,9 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
             String price= getIntent().getExtras().getString("price");
             String name= getIntent().getExtras().getString("item_name");
             String image= getIntent().getExtras().getString("item_image");
+            String count = getIntent().getExtras().getString("count");
             total.setText(""+price);
-            list.add(new Itemclass(""+image,""+name,""+price,""));
+            list.add(new Itemclass(""+image,""+name,""+price,""+count));
             recycle();
         }
         else {
@@ -224,8 +225,11 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
                     totalprice= totalprice + Price*count;
                     list.add(new Itemclass(""+image,""+name,""+price,""+count));
                 }
-                mobileadapter2.notifyDataSetChanged();
+                itemAdapter2.notifyDataSetChanged();
                 total.setText(""+totalprice);
+                if (list.size()==0){
+                    finish();
+                }
             }
 
             @Override
@@ -238,53 +242,21 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         checkout_recycler.setLayoutManager(layoutManager);
-        mobileadapter2 = new Mobileadapter(list);
-        checkout_recycler.setAdapter(mobileadapter2);
+        itemAdapter2 = new ItemAdapter(list);
+        checkout_recycler.setAdapter(itemAdapter2);
     }
 
     @Override
     public void onPaymentSuccess(String s) {
-        int j= 0;
-        String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Toast.makeText(Checkout_activity.this,"Success",Toast.LENGTH_SHORT).show();
-        for (j=0;j<list.size();j++){
-            Map<String,Object> taskMap = new HashMap<>();
-            taskMap.put("item_name", ""+list.get(j).getItem_name());
-            taskMap.put("item_image", ""+list.get(j).getItem_image());
-            taskMap.put("price", ""+list.get(j).getPrice());
-            taskMap.put("address",""+editText.getText().toString());
-            taskMap.put("phone", ""+phone.getText().toString());
-            taskMap.put("pincode", ""+pincodes.getText().toString());
-            taskMap.put("name", ""+name.getText().toString());
-            taskMap.put("count",""+list.get(j).getCount());
-            int i = 0;
-            database.getReference("users").child(uid).child("placed_orders").child(list.get(j).getItem_name()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        Order_class order_class = snapshot.getValue(Order_class.class);
-                        String item_name= order_class.getItem_name();
-                        int count= Integer.parseInt(order_class.getCount())+1;
-                        if (order_class.getAddress().equals(editText.getText().toString())&& order_class.getPhone().equals(phone.getText().toString()) && order_class.getName().equals(name.getText().toString())) {
-                            database.getReference("users").child(uid).child("placed_orders").child(item_name).child("count").setValue(""+count);
-                        }
-                        else {
-                            int randome = (int) Math.random();
-                            database.getReference("users").child(uid).child("placed_orders").child(item_name + "" + randome).setValue(taskMap);
-                        }
-
-                    }
-                }
-
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            database.getReference("users").child(uid).child("placed_orders").child(list.get(j).getItem_name()).setValue(taskMap);
+        try {
+            order();
+        }
+        catch (Exception e){
+            Toast.makeText(Checkout_activity.this,"Success",Toast.LENGTH_SHORT).show();
         }
         if(process==1){
+
+            String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
             database.getReference("users").child(uid).child("cart").removeValue();
             Toast.makeText(Checkout_activity.this,"Order Placed Successfully",Toast.LENGTH_SHORT).show();
             finish();
@@ -312,6 +284,24 @@ public class Checkout_activity extends AppCompatActivity implements PaymentResul
 
             }
         });*/
+    }
+
+    private void order() {
+        String randome = String.valueOf(myRandom.nextInt(100));
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Toast.makeText(Checkout_activity.this, "Success", Toast.LENGTH_SHORT).show();
+        for (int j = 0; j < list.size(); j++) {
+            Map<String, Object> taskMap = new HashMap<>();
+            taskMap.put("item_name", "" + list.get(j).getItem_name());
+            taskMap.put("item_image", "" + list.get(j).getItem_image());
+            taskMap.put("price", "" + list.get(j).getPrice());
+            taskMap.put("address", "" + editText.getText().toString());
+            taskMap.put("phone", "" + phone.getText().toString());
+            taskMap.put("pincode", "" + pincodes.getText().toString());
+            taskMap.put("name", "" + name.getText().toString());
+            taskMap.put("count", "" + list.get(j).getCount());
+            database.getReference("users").child(uid).child("placed_orders").child("" + list.get(j).getItem_name() + "" + randome).setValue(taskMap);
+        }
     }
 
     @Override

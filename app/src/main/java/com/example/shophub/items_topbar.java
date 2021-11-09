@@ -2,13 +2,11 @@ package com.example.shophub;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -19,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shophub.ui.home.Itemclass;
-import com.example.shophub.ui.home.Mobileadapter;
+import com.example.shophub.ui.home.ItemAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class items_topbar extends AppCompatActivity {
-    Mobileadapter mobileadapter;
+    ItemAdapter itemAdapter;
     RecyclerView recyclerView2;
     List<Itemclass> itemclass_other;
     LinearLayoutManager layoutManager;
@@ -86,7 +84,7 @@ public class items_topbar extends AppCompatActivity {
                                     String _price = items_list.getPrice();
                                     String _image = items_list.getItem_image();
                                     itemclass_other.add(new Itemclass("" + _image, "" + _name, "" + _price,""));
-                                    mobileadapter.notifyDataSetChanged();
+                                    itemAdapter.notifyDataSetChanged();
                                 }
                             }
 
@@ -106,7 +104,7 @@ public class items_topbar extends AppCompatActivity {
                                 String _image = items_list.getItem_image();
                                 if (_name.toUpperCase().startsWith(search.toUpperCase())) {
                                     itemclass_other.add(new Itemclass("" + _image, "" + _name, "" + _price,""));
-                                    mobileadapter.notifyDataSetChanged();
+                                    itemAdapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -129,8 +127,8 @@ public class items_topbar extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView2.setLayoutManager(layoutManager);
-        mobileadapter = new Mobileadapter(itemclass_other);
-        recyclerView2.setAdapter(mobileadapter);
+        itemAdapter = new ItemAdapter(itemclass_other);
+        recyclerView2.setAdapter(itemAdapter);
     }
 
     private void mobile() {
@@ -146,7 +144,7 @@ public class items_topbar extends AppCompatActivity {
                     String image= itemclass.getItem_image();
                     itemclass_other.add(new Itemclass(""+image,""+name,""+price,""));
                 }
-                mobileadapter.notifyDataSetChanged();
+                itemAdapter.notifyDataSetChanged();
             }
 
             @Override

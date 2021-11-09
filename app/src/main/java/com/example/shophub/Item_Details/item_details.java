@@ -15,8 +15,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,39 +56,52 @@ import static android.content.ContentValues.TAG;
 public class item_details extends AppCompatActivity {
     ProgressDialog prog;
     ViewPager viewPager;
-    TextView name, price;
+    TextView name, price, plus,minus, counts;
     String Name,Price,Image;
     Button buy,add_to_cart;
     FirebaseAuth mauth;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     FirebaseDatabase database= FirebaseDatabase.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
-        prog = new ProgressDialog(item_details.this);
-        prog.setContentView(R.layout.progressbar_);
-        prog.setCancelable(false);
-        prog.setMessage("Loading please wait.....");
-        prog.setIndeterminate(true);
-        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         Image= getIntent().getExtras().getString("item_image");
         Name= getIntent().getExtras().getString("item_name");
         Price= getIntent().getExtras().getString("item_price");
         viewPager=(ViewPager)findViewById(R.id.item_detailed_images);
         name= (TextView) findViewById(R.id.item_detailed_name);
         price= (TextView) findViewById(R.id.item_detailed_price);
+        plus= (TextView) findViewById(R.id.add);
+        minus= (TextView) findViewById(R.id.minus);
+        counts= (TextView) findViewById(R.id.count);
         add_to_cart=(Button)findViewById(R.id.add_cart);
         buy=(Button)findViewById(R.id.buy);
         name.setText(Name);
         price.setText("Rs."+Price);
         viewPagers();
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int final_count= Integer.parseInt(counts.getText().toString())+1;
+                counts.setText(""+final_count);
+            }
+        });
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int final_count= Integer.parseInt(counts.getText().toString());
+                if (final_count!=1){
+                    int count= final_count-1;
+                    counts.setText(""+count);
+                }
+            }
+        });
         add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prog.show();
-                String item_count="1";
+                String item_count=counts.getText().toString();
+                int icount= Integer.parseInt(counts.getText().toString());
                 if (user!=null){
                     String path= mauth.getInstance().getCurrentUser().getUid();
 
@@ -94,7 +109,7 @@ public class item_details extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()){
-                                int count= Integer.parseInt(snapshot.getValue().toString())+1;
+                                int count=  Integer.parseInt(snapshot.getValue().toString())+icount;
                                 database.getReference().child("users").child(""+path).child("cart").child(""+Name).child("count").setValue(""+count);
                                 Toast.makeText(item_details.this,count+" "+Name+" added into Cart",Toast.LENGTH_SHORT).show();
                             }
@@ -116,16 +131,16 @@ public class item_details extends AppCompatActivity {
 
                 }
                 else {
-                    Intent intent= new Intent(item_details.this, Sign_in.class);
-                    intent.putExtra("name","item_details");
+                    Intent intent = new Intent(item_details.this, Sign_in.class);
+                    intent.putExtra("name", "item_details");
                     startActivity(intent);
                 }
-                prog.hide();
             }
         });
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String item_count=counts.getText().toString();
                 if (user!=null){
                     String image= getIntent().getExtras().getString("item_image");
                     String name= getIntent().getExtras().getString("item_name");
@@ -135,6 +150,7 @@ public class item_details extends AppCompatActivity {
                     intent.putExtra("item_name",""+name);
                     intent.putExtra("item_image",""+ image);
                     intent.putExtra("price",""+price);
+                    intent.putExtra("count",""+item_count);
                     startActivity(intent);
                 }
                 else {
@@ -146,14 +162,12 @@ public class item_details extends AppCompatActivity {
         });
     }
     private void viewPagers() {
-        prog.show();
         List<String> imagelist= new ArrayList<>();
         imagelist.add(Image);
         imagelist.add(Image);
         imagelist.add(Image);
         item_details_slider image= new item_details_slider(imagelist);
         viewPager.setAdapter(image);
-        prog.hide();
     }
     @Override
     protected void onStart() {

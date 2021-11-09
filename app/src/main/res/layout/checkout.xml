@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp">
 
@@ -41,21 +41,31 @@
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Auto fill details" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginStart="40dp"
-                    android:text="New details" />
+                    android:layout_gravity="center_horizontal|left"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/baloo_tamma"
+                    android:gravity="center"
+                    android:text="New details"
+                    android:textColor="#875B6E"
+                    android:textSize="22sp" />
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/baloo_tamma"
+                    android:gravity="center"
+                    android:text="Auto fill details"
+                    android:textColor="#875B6E"
+                    android:textSize="22sp" />
 
             </RadioGroup>
 
@@ -63,11 +73,12 @@
                 android:id="@+id/user_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background_normal"
+                android:enabled="true"
                 android:hint="Address"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
@@ -81,9 +92,10 @@
                 android:id="@+id/chk_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20sp"
                 android:background="@android:drawable/editbox_background_normal"
+                android:enabled="true"
                 android:hint="Your name"
                 android:maxLength="40"
                 android:paddingStart="10dp"
@@ -98,11 +110,12 @@
                 android:id="@+id/chk_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background_normal"
+                android:enabled="true"
                 android:hint="Phone"
                 android:maxLength="10"
                 android:paddingStart="10dp"
@@ -117,10 +130,11 @@
                 android:id="@+id/chk_pincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20sp"
                 android:layout_marginBottom="20dp"
                 android:background="@android:drawable/editbox_background_normal"
+                android:enabled="true"
                 android:hint="Pincode"
                 android:maxLength="6"
                 android:paddingStart="10dp"
@@ -143,7 +157,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="#5BC1DA"
+        android:background="#A8D9E4"
         android:foregroundGravity="bottom"
         android:gravity="bottom"
         android:orientation="vertical">
@@ -165,7 +179,8 @@
                 android:layout_weight="1"
                 android:gravity="center|right|center_horizontal|center_vertical"
                 android:text="Total Price : Rs."
-                android:textColor="#191515"
+                android:textColor="#504747"
+                android:textColorHighlight="#FFFFFF"
                 android:textSize="28sp" />
 
             <TextView
@@ -176,7 +191,8 @@
                 android:gravity="center"
                 android:hint="Price"
                 android:paddingEnd="20dp"
-                android:textColor="#191515"
+                android:textColor="#504747"
+                android:textColorHighlight="#FFFFFF"
                 android:textSize="28sp" />
 
         </LinearLayout>

@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,26 +25,20 @@ import com.example.shophub.Checkout_activity;
 import com.example.shophub.R;
 import com.example.shophub.Sign_in;
 import com.example.shophub.ui.home.Itemclass;
-import com.example.shophub.ui.home.Mobileadapter;
+import com.example.shophub.ui.home.ItemAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class CartFragment extends Fragment {
 
-    Mobileadapter mobileadapter;
+    ItemAdapter itemAdapter;
     RecyclerView cartrecycler;
     List<Itemclass> itemclass_other;
     LinearLayoutManager layoutManager;
@@ -57,25 +48,16 @@ public class CartFragment extends Fragment {
     int totalprice;
     Button checkout;
     ImageButton delete;
-    ProgressDialog prog;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_cart, container, false);
         checkout = root.findViewById(R.id.checkout);
         cartrecycler= root.findViewById(R.id.cart_recycler);
         total= root.findViewById(R.id.total_price);
-        prog = new ProgressDialog(root.getContext());
-        prog.setContentView(R.layout.progressbar_);
-        prog.setCancelable(false);
-        prog.setMessage("Loading please wait.....");
-        prog.setIndeterminate(true);
-        prog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         if (user!=null){
-            prog.show();
             mobile();
             recycle();
-            prog.hide();
         }
         else {
             Intent intent = new Intent(getActivity(), Sign_in.class);
@@ -117,7 +99,7 @@ public class CartFragment extends Fragment {
                     totalprice= totalprice+Price*count;
                     itemclass_other.add(new Itemclass(""+image,""+name,""+price,""+count));
                 }
-                mobileadapter.notifyDataSetChanged();
+                itemAdapter.notifyDataSetChanged();
                 total.setText(""+totalprice);
             }
 
@@ -131,8 +113,8 @@ public class CartFragment extends Fragment {
         layoutManager = new LinearLayoutManager(root.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartrecycler.setLayoutManager(layoutManager);
-        mobileadapter = new Mobileadapter(itemclass_other);
-        cartrecycler.setAdapter(mobileadapter);
+        itemAdapter = new ItemAdapter(itemclass_other);
+        cartrecycler.setAdapter(itemAdapter);
     }
     @Override
     public void onStart() {

@@ -2,6 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/arbutus</item>
+        <item>@font/averia_gruesa_libre</item>
+        <item>@font/baloo_tamma</item>
         <item>@font/coda</item>
         <item>@font/eater</item>
         <item>@font/marko_one</item>

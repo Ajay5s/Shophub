@@ -2,7 +2,6 @@ package com.example.shophub.ui.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,9 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,14 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.shophub.MainActivity;
 import com.example.shophub.R;
-import com.example.shophub.Sign_in;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -45,7 +38,7 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager;
     View root;
     EditText search;
-    Mobileadapter mobileadapter;
+    ItemAdapter itemAdapter;
     int i;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +62,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                i=1;
                 if (s.toString().equals("")){
                     scrollView.setVisibility(View.VISIBLE);
                     recyclerView2.setVisibility(View.GONE);
@@ -81,14 +73,13 @@ public class HomeFragment extends Fragment {
                     scrollView.setVisibility(View.GONE);
                     recyclerView2.setVisibility(View.VISIBLE);
                     search_progress(s.toString());
+                    recyclelist();
                 }
             }
         });
-        if(i==0){
-            home_fragment();
-            recycler();
-            recyclelist();
-        }
+        home_fragment();
+        recycler();
+        recyclelist();
         return root;
     }
 
@@ -97,13 +88,14 @@ public class HomeFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference().child("items").child("offers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemlist.clear();
                 for (DataSnapshot snapshots:snapshot.getChildren()){
                     Itemclass items_list= snapshots.getValue(Itemclass.class);
                     String _name= items_list.getItem_name();
                     String _price= items_list.getPrice();
                     String _image= items_list.getItem_image();
                     itemlist.add(new Itemclass(""+_image,""+_name,""+_price,""));
-                    mobileadapter.notifyDataSetChanged();
+                    itemAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -115,8 +107,8 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(root.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         homrrecycle.setLayoutManager(layoutManager);
-        mobileadapter = new Mobileadapter(itemlist);
-        homrrecycle.setAdapter(mobileadapter);
+        itemAdapter = new ItemAdapter(itemlist);
+        homrrecycle.setAdapter(itemAdapter);
     }
 
     private void search_progress(String search) {
@@ -137,7 +129,7 @@ public class HomeFragment extends Fragment {
                                     String _price= items_list.getPrice();
                                     String _image= items_list.getItem_image();
                                     itemlist.add(new Itemclass(""+_image,""+_name,""+_price,""));
-                                    mobileadapter.notifyDataSetChanged();
+                                    itemAdapter.notifyDataSetChanged();
                                 }
                             }
 
@@ -157,7 +149,7 @@ public class HomeFragment extends Fragment {
                                 String _image= items_list.getItem_image();
                                 if (_name.toUpperCase().startsWith(search.toUpperCase())){
                                     itemlist.add(new Itemclass(""+_image,""+_name,""+_price,""));
-                                    mobileadapter.notifyDataSetChanged();
+                                    itemAdapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -178,8 +170,8 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(root.getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView2.setLayoutManager(layoutManager);
-        mobileadapter = new Mobileadapter(itemlist);
-        recyclerView2.setAdapter(mobileadapter);
+        itemAdapter = new ItemAdapter(itemlist);
+        recyclerView2.setAdapter(itemAdapter);
     }
 
 
@@ -230,6 +222,7 @@ public class HomeFragment extends Fragment {
 
         if (isConnected == true) {
             String s;
+            recyclelist();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Please connect your internet connectivity");
