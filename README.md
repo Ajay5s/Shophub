@@ -17,6 +17,9 @@ Their are 2 option to purchase product 1 is add to card and 2nd one is buy now u
 I also added the feature for check is user online so that he can place the order otherwise user need to be login first 
 Thire is bottom nevigation bar so that user can easyly move to the different fragments.
 It is safe and secure to use this app on android platform.
+
+I used Firebase as database.  Razorpay as a Payment getway
+
 ![Screenshot_20211109-191019_Shophub](https://user-images.githubusercontent.com/92670087/140934474-eb5e2d66-8426-421b-aec8-2a4864ffbfa9.jpg)
 ![Screenshot_20211109-185555_Shophub](https://user-images.githubusercontent.com/92670087/140933931-67a19365-335b-44a8-bf15-ea4ffdf79449.jpg)
 ![Screenshot_20211109-185538_Shophub](https://user-images.githubusercontent.com/92670087/140933987-d3518bdc-76c3-4b50-94f2-5404da2d9b31.jpg)
